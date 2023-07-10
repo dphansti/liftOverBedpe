@@ -1,11 +1,10 @@
+#!/usr/bin/env python 
 import argparse
 import os
 
-#####################################################################################################
-#																									#			
-#											Functions												#
-#																									#			
-#####################################################################################################
+#############################################################################
+#							Functions                                       #
+#############################################################################
 
 """ Define a function that splits up bedpe files into 2 temp files """
 def splitBedpe(bedpe,tmp1="tmp1.bed",tmp2="tmp2.bed",header="F",verbose="F"):
@@ -19,8 +18,8 @@ def splitBedpe(bedpe,tmp1="tmp1.bed",tmp2="tmp2.bed",header="F",verbose="F"):
 	
 	for l in bedpein:
 		e = l.strip().split("\t")
-		print >> t1, "\t".join(e[0:3] + e[6:9])
-		print >> t2, "\t".join(e[3:8] + [e[9]])
+		print("\t".join(e[0:3] + e[6:9]), file=t1)
+		print("\t".join(e[3:8] + [e[9]]) , file=t2)
 		
 	t1.close()
 	t2.close()
@@ -32,7 +31,7 @@ def doliftOver(liftOver,chain,infile,verbose="F"):
 	
 	cmd = " ".join([liftOver,infile,chain,infile + ".success",infile + ".failure"])
 	if verbose == "T":
-		print cmd
+		print(cmd)
 	os.system(cmd)
 	
 
@@ -56,7 +55,7 @@ def mergeliftOver(f1,f2,outputfile,verbose="F"):
 		if e[3] in readdict:
 			r1 = readdict[e[3]]
 			r2 = e
-			print >>o, "\t".join(r1[:3] + r2[:3] + r1[3:6] + [r2[5]])
+			print("\t".join(r1[:3] + r2[:3] + r1[3:6] + [r2[5]]), file=o)
 	f.close()
 	o.close()
 
